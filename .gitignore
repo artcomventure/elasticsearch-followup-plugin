@@ -1,0 +1,6 @@
+.settings/
+target/maven-archiver/
+target/surefire-reports/
+target/classes/
+target/data/
+target/test-classes/
