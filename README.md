@@ -8,6 +8,10 @@ Installation
 
 Target folder contains compiled binaries ready for use. The first 3 numbers of the version tag refers to the version of ElasticSearch the plugin built for.
 
+``` bash
+sudo bin/plugin -u https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-1.4.4.1.zip -i followup
+```
+
 Usage
 -----------
 Track changes in myindex:  `http://localhost:9200/myindex/_followup?start`
