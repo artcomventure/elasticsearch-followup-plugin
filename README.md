@@ -12,6 +12,10 @@ Target folder contains compiled binaries ready for use. The first 3 numbers of t
 sudo bin/plugin -u https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-1.4.4.1.zip -i followup
 ```
 
+``` bash
+sudo bin/plugin -u https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-1.4.2.1.zip -i followup
+```
+
 Usage
 -----------
 Track changes in myindex:  `http://localhost:9200/myindex/_followup?start`
