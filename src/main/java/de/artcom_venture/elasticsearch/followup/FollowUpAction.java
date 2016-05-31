@@ -2,6 +2,7 @@ package de.artcom_venture.elasticsearch.followup;
 
 import static org.elasticsearch.rest.RestRequest.Method.GET;
 import static org.elasticsearch.rest.RestStatus.OK;
+import static org.elasticsearch.rest.RestStatus.NOT_FOUND;
 import java.util.concurrent.ConcurrentHashMap;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.inject.Inject;
@@ -38,15 +39,14 @@ public class FollowUpAction extends BaseRestHandler {
 		indicesService.indicesLifecycle().addListener(new Listener() {
 			@Override
 			public void afterIndexShardStarted(IndexShard indexShard) {
-				if (indexShard.routingEntry().primary()) {
-					String indexName = indexShard.shardId().index().name();
-					IndexListener indexListener = listeners.get(indexName);
-					if (indexListener == null) {
-						indexListener = new IndexListener();
-						listeners.put(indexName, indexListener);
-					}
-					indexShard.indexingService().addListener(indexListener);
+				String indexName = indexShard.shardId().index().name();
+				IndexListener indexListener = listeners.get(indexName);
+				if (indexListener == null) {
+					indexListener = new IndexListener();
+					listeners.put(indexName, indexListener);
+					LOG.info("[followup] follows [" + indexName + "]");
 				}
+				indexShard.indexingService().addListener(indexListener);
 			}
 		});
 	}
@@ -55,6 +55,12 @@ public class FollowUpAction extends BaseRestHandler {
 	protected void handleRequest(RestRequest request, RestChannel channel, Client client) throws Exception {
 		String indexName = request.param("index");
 		XContentBuilder builder = XContentFactory.contentBuilder(XContentType.JSON);
+		
+		if (!listeners.containsKey(indexName)) {
+			channel.sendResponse(new BytesRestResponse(NOT_FOUND, builder));
+			return;
+		}
+		
 		builder.startObject();
 		
 		if (request.param("start", null) != null) {
