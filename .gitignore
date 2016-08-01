@@ -4,3 +4,5 @@ target/surefire-reports/
 target/classes/
 target/data/
 target/test-classes/
+target/archive-tmp/
+target/generated-sources/

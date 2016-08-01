@@ -12,7 +12,7 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.index.shard.service.IndexShard;
+import org.elasticsearch.index.shard.IndexShard;
 import org.elasticsearch.indices.IndicesLifecycle.Listener;
 import org.elasticsearch.indices.IndicesService;
 import org.elasticsearch.rest.BaseRestHandler;
@@ -71,6 +71,10 @@ public class FollowUpAction extends BaseRestHandler {
 			listeners.get(indexName).stop();
 			builder.field("status", 200);
 			LOG.info("[followup] stopped listening on [" + indexName + "]");
+		} else if (request.param("clear", null) != null) {
+			listeners.get(indexName).clear();
+			builder.field("status", 200);
+			LOG.info("[followup] cleared of [" + indexName + "]");
 		} else {
 			IndexListener indexListener = listeners.get(indexName);
 			if (indexListener != null) {

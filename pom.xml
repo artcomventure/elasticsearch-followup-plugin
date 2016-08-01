@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<name>elasticsearch-followup-plugin</name>
+	<name>elasticsearch-${name}-plugin</name>
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.artcom_venture</groupId>
-	<artifactId>elasticsearch-followup-plugin</artifactId>
-	<version>${elasticsearch}.2</version>
+	<artifactId>elasticsearch-${name}-plugin</artifactId>
+	<version>${elasticsearch}.1</version>
 	<packaging>jar</packaging>
-	<description>ElasticSearch FollowUp Plugin</description>
+	<description>FollowUp Plugin</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<elasticsearch>1.4.4</elasticsearch>
+		<elasticsearch>2.3.3</elasticsearch>
+		<lucene>5.5.0</lucene>
+		<compiler>1.7</compiler>
+		<name>followup</name>
 	</properties>
 
 	<licenses>
@@ -52,11 +55,19 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.19.1</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<source>${compiler}</source>
+					<target>${compiler}</target>
 				</configuration>
 			</plugin>
 			<plugin>

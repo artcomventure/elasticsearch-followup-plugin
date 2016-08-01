@@ -48,4 +48,8 @@ public class IndexListener extends IndexingOperationListener {
 	public void stop() {
 		this.isStarted = false;
 	}
+	
+	public void clear() {
+		this.changes.clear();
+	}
 }

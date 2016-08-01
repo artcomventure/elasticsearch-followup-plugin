@@ -1,6 +1,7 @@
 package de.artcom_venture.elasticsearch.followup;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Random;
@@ -9,21 +10,21 @@ import java.util.Scanner;
 import junit.framework.TestCase;
 
 import org.elasticsearch.action.admin.cluster.node.info.NodesInfoResponse;
-import org.elasticsearch.action.admin.cluster.node.info.PluginInfo;
+import org.elasticsearch.plugins.PluginInfo;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.client.Client;
 import org.elasticsearch.client.Requests;
-import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
-import org.elasticsearch.node.Node;
-import org.elasticsearch.node.NodeBuilder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class FollowUpPluginTest extends TestCase {
 
-    private Node node;
+    private Client client;
     private static Random randomGenerator = new Random();
     private static final String ES_INDEX = "myindex";
     private static final String ES_TYPE = "mytype";
@@ -33,18 +34,11 @@ public class FollowUpPluginTest extends TestCase {
 
     @Override
     public void setUp() throws Exception {
-    	ImmutableSettings.Builder settings = ImmutableSettings.settingsBuilder();
-	    settings.put("node.name", "test");
-	    settings.put("index.number_of_shard", "1");
-	    settings.put("index.number_of_replicas", "0");
-	    settings.put("discovery.zen.ping.multicast.enabled", "false");
-	    settings.put("path.data", "target/data");
-	    settings.put("network.publish_host", HOST);
-	    this.node = NodeBuilder.nodeBuilder().settings(settings).clusterName("test").data(true).local(true).node();
+    	client = TransportClient.builder().build().addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(HOST), 9300));
 	    
 	    // create index
-    	node.client().admin().indices().delete(new DeleteIndexRequest("_all")).actionGet();
-	    node.client().admin().indices().create(Requests.createIndexRequest(ES_INDEX)).actionGet();
+    	client.admin().indices().delete(new DeleteIndexRequest("_all")).actionGet();
+    	client.admin().indices().create(Requests.createIndexRequest(ES_INDEX)).actionGet();
 	    
 	    // create type
 	    XContentBuilder mapping = XContentFactory.jsonBuilder()
@@ -61,15 +55,16 @@ public class FollowUpPluginTest extends TestCase {
 	                  .endObject()
 	              .endObject()
 	           .endObject();
-	    node.client().admin().indices().preparePutMapping(ES_INDEX).setType(ES_TYPE).setSource(mapping).execute().actionGet();
+	    client.admin().indices().preparePutMapping(ES_INDEX).setType(ES_TYPE).setSource(mapping).execute().actionGet();
 	    
 	    // create initial document
+	    clearListener();
 	    indexDocument("1");
     }
 
     @Override
     public void tearDown() throws Exception {
-    	this.node.close();
+    	client.close();
     }
     
     private int getChangesLength() throws MalformedURLException, IOException {
@@ -92,6 +87,13 @@ public class FollowUpPluginTest extends TestCase {
 		scanner.close();
 		return response.getInt("status");
     }
+
+    private int clearListener() throws MalformedURLException, IOException {
+    	Scanner scanner = new Scanner(new URL(PLUGIN_URL_LIST + "?clear").openStream());
+		JSONObject response =  new JSONObject(scanner.useDelimiter("\\Z").next());
+		scanner.close();
+		return response.getInt("status");
+    }
     
     private void indexDocument(String id) throws IOException {
     	XContentBuilder sourceBuilder = XContentFactory.jsonBuilder()
@@ -99,11 +101,11 @@ public class FollowUpPluginTest extends TestCase {
     			.field("key", "Lorem ipsum")
     			.field("value", randomGenerator.nextLong())
     		.endObject();
-		node.client().index(new IndexRequest(ES_INDEX, ES_TYPE).source(sourceBuilder).id(id)).actionGet();
+    	client.index(new IndexRequest(ES_INDEX, ES_TYPE).source(sourceBuilder).id(id)).actionGet();
     }
     
     private void deleteDocument(String id) throws IOException {
-    	node.client().prepareDelete(ES_INDEX, ES_TYPE, id).execute().actionGet();
+    	client.prepareDelete(ES_INDEX, ES_TYPE, id).execute().actionGet();
     }
     
     private void createDocument() throws IOException {
@@ -112,18 +114,18 @@ public class FollowUpPluginTest extends TestCase {
     			.field("key", "Lorem ipsum")
     			.field("value", randomGenerator.nextLong())
     		.endObject();
-		node.client().index(new IndexRequest(ES_INDEX, ES_TYPE).source(sourceBuilder)).actionGet();
+    	client.index(new IndexRequest(ES_INDEX, ES_TYPE).source(sourceBuilder)).actionGet();
     }
     
     public void testCompatibility() throws Exception {
     	String pluginVersion = "-";
-    	NodesInfoResponse nodesInfoResponse = node.client().admin().cluster().prepareNodesInfo().clear().setPlugins(true).get();
-        for (PluginInfo pluginInfo : nodesInfoResponse.getNodes()[0].getPlugins().getInfos()) {
+    	NodesInfoResponse nodesInfoResponse = client.admin().cluster().prepareNodesInfo().clear().setPlugins(true).get();
+        for (PluginInfo pluginInfo : nodesInfoResponse.getNodes()[0].getPlugins().getPluginInfos()) {
         	if (pluginInfo.getName().equals(PLUGIN_NAME)) {
         		pluginVersion = pluginInfo.getVersion();
         	}
         }
-        assertEquals(pluginVersion, node.client().admin().cluster().prepareNodesInfo().get().getNodes()[0].getVersion().toString());
+        assertTrue(pluginVersion.startsWith(client.admin().cluster().prepareNodesInfo().get().getNodes()[0].getVersion().toString()));
     }
     
     public void testStart() throws MalformedURLException, IOException {
@@ -132,6 +134,10 @@ public class FollowUpPluginTest extends TestCase {
 
     public void testStop() throws MalformedURLException, IOException {
     	assertEquals(200, stopListener());
+    }
+
+    public void testClear() throws MalformedURLException, IOException {
+    	assertEquals(200, clearListener());
     }
     
     public void testListener() throws Exception {
