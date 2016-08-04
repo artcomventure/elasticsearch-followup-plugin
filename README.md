@@ -12,10 +12,10 @@ Target folder contains compiled binaries ready for use. The first 3 numbers of t
 plugin -u https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-1.4.4.2.zip -i followup
 ```
 
-* ElasticSearch 2.3.3
+* ElasticSearch 2.3.5
 
 ``` bash
-plugin install https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-2.3.3.1.zip
+plugin install https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-2.3.5.1.zip
 ```
 
 Restart ElasticSearch.
