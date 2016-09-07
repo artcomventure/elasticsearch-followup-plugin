@@ -11,7 +11,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<elasticsearch>2.3.5</elasticsearch>
+		<elasticsearch>2.4.0</elasticsearch>
 		<lucene>5.5.0</lucene>
 		<compiler>1.7</compiler>
 		<name>followup</name>

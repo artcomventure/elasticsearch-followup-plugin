@@ -30,7 +30,7 @@ public class IndexListener extends IndexingOperationListener {
 	}
 
 	@Override
-	public void postIndex(Index document) {
+	public void postIndex(Index document, boolean created) {
 		if (this.isStarted) {
 			changes.add(new Change(document.opType(), document.id(), document.type()));
 		}
