@@ -18,6 +18,12 @@ plugin -u https://github.com/artcomventure/elasticsearch-followup-plugin/raw/mas
 plugin install https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-2.3.5.1.zip
 ```
 
+* ElasticSearch 2.4.0
+
+``` bash
+plugin install https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-2.4.0.1.zip
+```
+
 Restart ElasticSearch.
 
 ## Usage
