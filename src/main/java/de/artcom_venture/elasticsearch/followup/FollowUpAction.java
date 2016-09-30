@@ -40,13 +40,9 @@ public class FollowUpAction extends BaseRestHandler {
 			@Override
 			public void afterIndexShardStarted(IndexShard indexShard) {
 				String indexName = indexShard.shardId().index().name();
-				IndexListener indexListener = listeners.get(indexName);
-				if (indexListener == null) {
-					indexListener = new IndexListener();
-					listeners.put(indexName, indexListener);
-					LOG.info("[followup] follows [" + indexName + "]");
-				}
-				indexShard.indexingService().addListener(indexListener);
+				listeners.putIfAbsent(indexName, new IndexListener());			
+				LOG.info("[followup] follows [" + indexName + "]");
+				indexShard.indexingService().addListener(listeners.get(indexName));
 			}
 		});
 	}

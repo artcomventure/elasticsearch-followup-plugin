@@ -21,7 +21,7 @@ plugin install https://github.com/artcomventure/elasticsearch-followup-plugin/ra
 * ElasticSearch 2.4.0
 
 ``` bash
-plugin install https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-2.4.0.1.zip
+plugin install https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-2.4.0.2.zip
 ```
 
 Restart ElasticSearch.
