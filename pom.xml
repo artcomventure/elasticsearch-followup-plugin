@@ -5,14 +5,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.artcom_venture</groupId>
 	<artifactId>elasticsearch-${name}-plugin</artifactId>
-	<version>${elasticsearch}.2</version>
+	<version>${elasticsearch}.1</version>
 	<packaging>jar</packaging>
 	<description>FollowUp Plugin</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<elasticsearch>2.4.0</elasticsearch>
-		<lucene>5.5.0</lucene>
+		<elasticsearch>2.4.1</elasticsearch>
+		<lucene>5.5.2</lucene>
 		<compiler>1.7</compiler>
 		<name>followup</name>
 	</properties>
@@ -41,7 +41,7 @@
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
-			<version>20151123</version>
+			<version>20160810</version>
 		</dependency>
 	</dependencies>
 

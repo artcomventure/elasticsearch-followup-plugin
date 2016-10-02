@@ -6,10 +6,16 @@ The plugin tracks CRUD changes made in an ElasticSearch index.
 
 Target folder contains compiled binaries ready for use. The first 3 numbers of the version tag refers to the version of ElasticSearch the plugin built for.
 
-* ElasticSearch 1.4.4
+* ElasticSearch 2.4.1
 
 ``` bash
-plugin -u https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-1.4.4.2.zip -i followup
+plugin install https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-2.4.1.1.zip
+```
+
+* ElasticSearch 2.4.0
+
+``` bash
+plugin install https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-2.4.0.2.zip
 ```
 
 * ElasticSearch 2.3.5
@@ -18,11 +24,12 @@ plugin -u https://github.com/artcomventure/elasticsearch-followup-plugin/raw/mas
 plugin install https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-2.3.5.1.zip
 ```
 
-* ElasticSearch 2.4.0
+* ElasticSearch 1.4.4
 
 ``` bash
-plugin install https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-2.4.0.2.zip
+plugin -u https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-1.4.4.2.zip -i followup
 ```
+
 
 Restart ElasticSearch.
 
