@@ -1,24 +1,31 @@
 <?xml version="1.0"?>
 <assembly>
-    <id>release</id>
-    <formats>
-        <format>zip</format>
-    </formats>
-    <includeBaseDirectory>false</includeBaseDirectory>
-	
+	<id>release</id>
+	<formats>
+		<format>zip</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+
 	<files>
-        <file>
-            <source>${project.basedir}/src/main/resources/plugin-descriptor.properties</source>
-            <outputDirectory>/</outputDirectory>
-            <filtered>true</filtered>
-        </file>
+		<file>
+			<source>${project.basedir}/src/main/resources/plugin-descriptor.properties
+			</source>
+			<outputDirectory>/</outputDirectory>
+			<filtered>true</filtered>
+		</file>
+		<file>
+			<source>${project.basedir}/LICENSE.txt
+			</source>
+			<outputDirectory>/</outputDirectory>
+			<filtered>false</filtered>
+		</file>
 	</files>
-	
-    <dependencySets>
-        <dependencySet>
-            <outputDirectory>/</outputDirectory>
-            <useProjectArtifact>true</useProjectArtifact>
-            <useTransitiveFiltering>true</useTransitiveFiltering>
-        </dependencySet>
-    </dependencySets>
+
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>/</outputDirectory>
+			<useProjectArtifact>true</useProjectArtifact>
+			<useTransitiveFiltering>true</useTransitiveFiltering>
+		</dependencySet>
+	</dependencySets>
 </assembly>

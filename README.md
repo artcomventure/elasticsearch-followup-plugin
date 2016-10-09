@@ -9,7 +9,7 @@ Target folder contains compiled binaries ready for use. The first 3 numbers of t
 * ElasticSearch 2.4.1
 
 ``` bash
-plugin install https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-2.4.1.1.zip
+plugin install https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-2.4.1.2.zip
 ```
 
 * ElasticSearch 2.4.0

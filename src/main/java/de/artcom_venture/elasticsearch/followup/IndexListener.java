@@ -12,7 +12,7 @@ import org.elasticsearch.index.indexing.IndexingOperationListener;
  * @author Olegs Kunicins
  */
 public class IndexListener extends IndexingOperationListener {
-	private ConcurrentLinkedQueue<Change> changes = new ConcurrentLinkedQueue<Change>();
+	private ConcurrentLinkedQueue<Change> changes = new ConcurrentLinkedQueue<>();
 	private boolean isStarted = false;
 
 	@Override
@@ -41,7 +41,7 @@ public class IndexListener extends IndexingOperationListener {
 	}
 	
 	public void start() {
-		this.changes = new ConcurrentLinkedQueue<Change>();
+		this.changes = new ConcurrentLinkedQueue<>();
 		this.isStarted = true;
 	}
 	

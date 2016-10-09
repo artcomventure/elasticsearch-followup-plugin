@@ -28,8 +28,9 @@ import org.elasticsearch.rest.RestRequest;
  */
 public class FollowUpAction extends BaseRestHandler {
 	
+	private static final String STATUS = "status";
 	private static final ESLogger LOG = Loggers.getLogger(FollowUpAction.class);
-	private ConcurrentHashMap<String, IndexListener> listeners = new ConcurrentHashMap<String, IndexListener>();
+	private ConcurrentHashMap<String, IndexListener> listeners = new ConcurrentHashMap<>();
 
 	@Inject
 	public FollowUpAction(Settings settings, Client client, RestController controller, IndicesService indicesService) {
@@ -61,11 +62,11 @@ public class FollowUpAction extends BaseRestHandler {
 		
 		if (request.param("start", null) != null) {
 			listeners.get(indexName).start();
-			builder.field("status", 200);
+			builder.field(STATUS, 200);
 			LOG.info("[followup] started listening on [" + indexName + "]");
 		} else if (request.param("stop", null) != null) {
 			listeners.get(indexName).stop();
-			builder.field("status", 200);
+			builder.field(STATUS, 200);
 			LOG.info("[followup] stopped listening on [" + indexName + "]");
 		} else if (request.param("clear", null) != null) {
 			listeners.get(indexName).clear();
