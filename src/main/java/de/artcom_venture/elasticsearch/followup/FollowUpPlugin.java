@@ -1,29 +1,37 @@
 package de.artcom_venture.elasticsearch.followup;
 
-import org.elasticsearch.common.inject.Module;
+import org.elasticsearch.index.IndexModule;
 import org.elasticsearch.plugins.Plugin;
+import org.elasticsearch.rest.RestHandler;
+import org.elasticsearch.plugins.ActionPlugin;
 
-import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * @license MIT
  * @copyright artcom venture GmbH
  * @author Olegs Kunicins
  */
-public class FollowUpPlugin extends Plugin {
+public class FollowUpPlugin extends Plugin implements ActionPlugin {
 	
-	@Override 
-    public Collection<Module> nodeModules() {
-        return Collections.<Module>singletonList(new FollowUpModule());
-    }
-
-	@Override 
-	public String description() {
-		return "FollowUp Plugin";
+	private static final Map<String, IndexListener> listeners = new ConcurrentHashMap<>();
+	
+	public static IndexListener getListener(String indexName) {
+		return listeners.get(indexName);
 	}
-
-	@Override 
-	public String name() {
-		return "followup";
+	
+	@Override
+	public List<Class<? extends RestHandler>> getRestHandlers() {
+		return Collections.singletonList(FollowUpAction.class);
+    }
+	
+	@Override
+	public void onIndexModule(IndexModule indexModule) {
+		String indexName = indexModule.getIndex().getName();
+		listeners.putIfAbsent(indexName, new IndexListener(indexName));
+		indexModule.addIndexOperationListener(listeners.get(indexName));
 	}
 }

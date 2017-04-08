@@ -11,11 +11,12 @@ import junit.framework.TestCase;
 
 import org.elasticsearch.action.admin.cluster.node.info.NodesInfoResponse;
 import org.elasticsearch.plugins.PluginInfo;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.Requests;
-import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
@@ -34,7 +35,7 @@ public class FollowUpPluginTest extends TestCase {
 
     @Override
     public void setUp() throws Exception {
-    	client = TransportClient.builder().build().addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(HOST), 9300));
+    	client = new PreBuiltTransportClient(Settings.EMPTY).addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(HOST), 9300));
 	    
 	    // create index
     	client.admin().indices().delete(new DeleteIndexRequest("_all")).actionGet();
@@ -120,12 +121,12 @@ public class FollowUpPluginTest extends TestCase {
     public void testCompatibility() throws Exception {
     	String pluginVersion = "-";
     	NodesInfoResponse nodesInfoResponse = client.admin().cluster().prepareNodesInfo().clear().setPlugins(true).get();
-        for (PluginInfo pluginInfo : nodesInfoResponse.getNodes()[0].getPlugins().getPluginInfos()) {
+        for (PluginInfo pluginInfo : nodesInfoResponse.getNodes().get(0).getPlugins().getPluginInfos()) {
         	if (pluginInfo.getName().equals(PLUGIN_NAME)) {
         		pluginVersion = pluginInfo.getVersion();
         	}
         }
-        assertTrue(pluginVersion.startsWith(client.admin().cluster().prepareNodesInfo().get().getNodes()[0].getVersion().toString()));
+        assertTrue(pluginVersion.startsWith(client.admin().cluster().prepareNodesInfo().get().getNodes().get(0).getVersion().toString()));
     }
     
     public void testStart() throws MalformedURLException, IOException {
@@ -181,7 +182,7 @@ public class FollowUpPluginTest extends TestCase {
 		scanner.close();
 		JSONArray changes = response.getJSONArray(ES_INDEX);
 		
-		assertEquals("CREATE", changes.getJSONObject(0).getString("operation"));
+		assertEquals("INDEX", changes.getJSONObject(0).getString("operation"));
 		
 		assertEquals("a", changes.getJSONObject(1).getString("id"));
 		assertEquals("INDEX", changes.getJSONObject(1).getString("operation"));
