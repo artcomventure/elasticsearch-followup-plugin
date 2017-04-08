@@ -6,7 +6,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.elasticsearch.index.engine.Engine.Delete;
 import org.elasticsearch.index.engine.Engine.Index;
+import org.elasticsearch.index.engine.Engine.IndexResult;
 import org.elasticsearch.index.shard.IndexingOperationListener;
+import org.elasticsearch.index.shard.ShardId;
+import org.elasticsearch.index.engine.Engine.DeleteResult;
 
 /**
  * @license MIT
@@ -25,14 +28,14 @@ public class IndexListener implements IndexingOperationListener {
 	}
 	
 	@Override
-	public void postDelete(Delete document) {
+	public void postDelete(ShardId shardId, Delete document, DeleteResult result) {
 		if (this.isStarted) {
 			changes.add(new Change(Change.DELETE, document.id(), document.type()));
 		}
 	}
 
 	@Override
-	public void postIndex(Index document, boolean created) {
+	public void postIndex(ShardId shardId, Index document, IndexResult result) {
 		if (this.isStarted) {
 			changes.add(new Change(Change.INDEX, document.id(), document.type()));
 		}
