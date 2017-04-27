@@ -18,6 +18,12 @@ elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-fo
 elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-5.2.2.1.zip
 ```
 
+* ElasticSearch 2.4.5
+
+``` bash
+plugin install https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-2.4.5.1.zip
+```
+
 * ElasticSearch 2.4.4
 
 ``` bash
