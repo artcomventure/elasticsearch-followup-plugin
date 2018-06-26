@@ -6,6 +6,18 @@ The plugin tracks CRUD changes made in an ElasticSearch index.
 
 Target folder contains compiled binaries ready for use. The first 3 numbers of the version tag refers to the version of ElasticSearch the plugin built for.
 
+* ElasticSearch 5.6.10
+
+``` bash
+elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-5.6.10.1.zip
+```
+
+* ElasticSearch 5.6.9
+
+``` bash
+elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-5.6.9.1.zip
+```
+
 * ElasticSearch 5.6.8
 
 ``` bash
