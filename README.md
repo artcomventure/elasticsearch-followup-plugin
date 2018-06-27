@@ -42,6 +42,48 @@ elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-fo
 elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-6.2.0.1.zip
 ```
 
+* ElasticSearch 6.1.4
+
+``` bash
+elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-6.1.4.1.zip
+```
+
+* ElasticSearch 6.1.3
+
+``` bash
+elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-6.1.3.1.zip
+```
+
+* ElasticSearch 6.1.2
+
+``` bash
+elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-6.1.2.1.zip
+```
+
+* ElasticSearch 6.1.1
+
+``` bash
+elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-6.1.1.1.zip
+```
+
+* ElasticSearch 6.1.0
+
+``` bash
+elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-6.1.0.1.zip
+```
+
+* ElasticSearch 6.0.1
+
+``` bash
+elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-6.0.1.1.zip
+```
+
+* ElasticSearch 6.0.0
+
+``` bash
+elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-6.0.1.1.zip
+```
+
 * ElasticSearch 5.6.10
 
 ``` bash
