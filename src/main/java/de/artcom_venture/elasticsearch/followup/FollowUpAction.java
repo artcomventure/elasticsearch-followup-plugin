@@ -68,4 +68,9 @@ public class FollowUpAction extends BaseRestHandler {
 			channel.sendResponse(new BytesRestResponse(OK, builder));
 		};
 	}
+
+    @Override
+    public String getName() {
+        return "FollowUp";
+    }
 }

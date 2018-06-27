@@ -6,6 +6,42 @@ The plugin tracks CRUD changes made in an ElasticSearch index.
 
 Target folder contains compiled binaries ready for use. The first 3 numbers of the version tag refers to the version of ElasticSearch the plugin built for.
 
+* ElasticSearch 6.3.0
+
+``` bash
+elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-6.3.0.1.zip
+```
+
+* ElasticSearch 6.2.4
+
+``` bash
+elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-6.2.4.1.zip
+```
+
+* ElasticSearch 6.2.3
+
+``` bash
+elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-6.2.3.1.zip
+```
+
+* ElasticSearch 6.2.2
+
+``` bash
+elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-6.2.2.1.zip
+```
+
+* ElasticSearch 6.2.1
+
+``` bash
+elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-6.2.1.1.zip
+```
+
+* ElasticSearch 6.2.0
+
+``` bash
+elasticsearch-plugin install   https://github.com/artcomventure/elasticsearch-followup-plugin/raw/master/target/elasticsearch-followup-plugin-6.2.0.1.zip
+```
+
 * ElasticSearch 5.6.10
 
 ``` bash
