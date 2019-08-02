@@ -1,17 +1,7 @@
 package de.artcom_venture.elasticsearch.followup;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Random;
-import java.util.Scanner;
-
 import junit.framework.TestCase;
-
 import org.elasticsearch.action.admin.cluster.node.info.NodesInfoResponse;
-import org.elasticsearch.plugins.PluginInfo;
-import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.Client;
@@ -20,8 +10,16 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
+import org.elasticsearch.plugins.PluginInfo;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.URL;
+import java.util.Random;
+import java.util.Scanner;
 
 public class FollowUpPluginTest extends TestCase {
 
@@ -61,7 +59,7 @@ public class FollowUpPluginTest extends TestCase {
         client.close();
     }
 
-    private int getChangesLength() throws MalformedURLException, IOException {
+    private int getChangesLength() throws IOException {
         JSONObject response;
         try (Scanner scanner = new Scanner(new URL(PLUGIN_URL_LIST).openStream())) {
             response = new JSONObject(scanner.useDelimiter("\\Z").next());
@@ -69,7 +67,7 @@ public class FollowUpPluginTest extends TestCase {
         return response.getJSONArray(ES_INDEX).length();
     }
 
-    private int stopListener() throws MalformedURLException, IOException {
+    private int stopListener() throws IOException {
         JSONObject response;
         try (Scanner scanner = new Scanner(new URL(PLUGIN_URL_LIST + "?stop").openStream())) {
             response = new JSONObject(scanner.useDelimiter("\\Z").next());
@@ -77,7 +75,7 @@ public class FollowUpPluginTest extends TestCase {
         return response.getInt("status");
     }
 
-    private int startListener() throws MalformedURLException, IOException {
+    private int startListener() throws IOException {
         JSONObject response;
         try (Scanner scanner = new Scanner(new URL(PLUGIN_URL_LIST + "?start").openStream())) {
             response = new JSONObject(scanner.useDelimiter("\\Z").next());
@@ -85,7 +83,7 @@ public class FollowUpPluginTest extends TestCase {
         return response.getInt("status");
     }
 
-    private int clearListener() throws MalformedURLException, IOException {
+    private int clearListener() throws IOException {
         JSONObject response;
         try (Scanner scanner = new Scanner(new URL(PLUGIN_URL_LIST + "?clear").openStream())) {
             response = new JSONObject(scanner.useDelimiter("\\Z").next());
@@ -99,10 +97,10 @@ public class FollowUpPluginTest extends TestCase {
                 .field("key", "Lorem ipsum")
                 .field("value", randomGenerator.nextLong())
                 .endObject();
-        client.index(new IndexRequest(ES_INDEX, ES_TYPE).source(sourceBuilder).id(id)).actionGet();
+        client.index(new IndexRequest(ES_INDEX).source(sourceBuilder).id(id)).actionGet();
     }
 
-    private void deleteDocument(String id) throws IOException {
+    private void deleteDocument(String id) {
         client.prepareDelete(ES_INDEX, ES_TYPE, id).execute().actionGet();
     }
 
@@ -112,10 +110,10 @@ public class FollowUpPluginTest extends TestCase {
                 .field("key", "Lorem ipsum")
                 .field("value", randomGenerator.nextLong())
                 .endObject();
-        client.index(new IndexRequest(ES_INDEX, ES_TYPE).source(sourceBuilder)).actionGet();
+        client.index(new IndexRequest(ES_INDEX).source(sourceBuilder)).actionGet();
     }
 
-    public void testCompatibility() throws Exception {
+    public void testCompatibility() {
         String pluginVersion = "-";
         NodesInfoResponse nodesInfoResponse = client.admin().cluster().prepareNodesInfo().clear().setPlugins(true).get();
         for (PluginInfo pluginInfo : nodesInfoResponse.getNodes().get(0).getPlugins().getPluginInfos()) {
@@ -126,15 +124,15 @@ public class FollowUpPluginTest extends TestCase {
         assertTrue(pluginVersion.startsWith(client.admin().cluster().prepareNodesInfo().get().getNodes().get(0).getVersion().toString()));
     }
 
-    public void testStart() throws MalformedURLException, IOException {
+    public void testStart() throws IOException {
         assertEquals(200, startListener());
     }
 
-    public void testStop() throws MalformedURLException, IOException {
+    public void testStop() throws IOException {
         assertEquals(200, stopListener());
     }
 
-    public void testClear() throws MalformedURLException, IOException {
+    public void testClear() throws IOException {
         assertEquals(200, clearListener());
     }
 

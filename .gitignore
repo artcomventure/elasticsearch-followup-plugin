@@ -6,3 +6,4 @@ target/data/
 target/test-classes/
 target/archive-tmp/
 target/generated-sources/
+.idea/
