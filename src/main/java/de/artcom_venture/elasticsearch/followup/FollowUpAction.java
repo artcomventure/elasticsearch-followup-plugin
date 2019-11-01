@@ -25,7 +25,6 @@ public class FollowUpAction extends BaseRestHandler {
 	
 	@Inject
 	public FollowUpAction(Settings settings, RestController controller) {
-		super(settings);	
 		controller.registerHandler(GET, "/{index}/_followup", this);
 	}
 
