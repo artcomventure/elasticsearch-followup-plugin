@@ -4,14 +4,14 @@
     <name>followup</name>
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.artcom_venture</groupId>
-    <artifactId>elasticsearch-${name}-plugin</artifactId>
+    <artifactId>elasticsearch-followup-plugin</artifactId>
     <version>${elasticsearch}.1</version>
     <packaging>jar</packaging>
     <description>FollowUp Plugin</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <elasticsearch>7.5.2</elasticsearch>
+        <elasticsearch>7.6.0</elasticsearch>
         <compiler>1.8</compiler>
     </properties>
 
