@@ -11,7 +11,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <elasticsearch>7.7.1</elasticsearch>
+        <elasticsearch>7.8.0</elasticsearch>
         <compiler>1.8</compiler>
     </properties>
 
