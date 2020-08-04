@@ -2,6 +2,7 @@ package de.artcom_venture.elasticsearch.followup;
 
 import junit.framework.TestCase;
 import org.elasticsearch.action.admin.cluster.node.info.NodesInfoResponse;
+import org.elasticsearch.action.admin.cluster.node.info.PluginsAndModules;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.Client;
@@ -115,8 +116,8 @@ public class FollowUpPluginTest extends TestCase {
 
     public void testCompatibility() {
         String pluginVersion = "-";
-        NodesInfoResponse nodesInfoResponse = client.admin().cluster().prepareNodesInfo().clear().setPlugins(true).get();
-        for (PluginInfo pluginInfo : nodesInfoResponse.getNodes().get(0).getPlugins().getPluginInfos()) {
+        NodesInfoResponse nodesInfoResponse = client.admin().cluster().prepareNodesInfo().clear().all().get();
+        for (PluginInfo pluginInfo : nodesInfoResponse.getNodes().get(0).getInfo(PluginsAndModules.class).getPluginInfos()) {
             if (pluginInfo.getName().equals(PLUGIN_NAME)) {
                 pluginVersion = pluginInfo.getVersion();
             }
