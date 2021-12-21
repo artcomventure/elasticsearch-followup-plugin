@@ -9,8 +9,8 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.client.Requests;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.common.xcontent.XContentFactory;
+import org.elasticsearch.xcontent.XContentBuilder;
+import static org.elasticsearch.xcontent.XContentFactory.*;
 import org.elasticsearch.plugins.PluginInfo;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.json.JSONArray;
@@ -41,7 +41,7 @@ public class FollowUpPluginTest extends TestCase {
         client.admin().indices().create(Requests.createIndexRequest(ES_INDEX)).actionGet();
 
         // create type
-        XContentBuilder mapping = XContentFactory.jsonBuilder()
+        XContentBuilder mapping = jsonBuilder()
                 .startObject()
                     .startObject(ES_TYPE)
                         .startObject("properties")
@@ -93,7 +93,7 @@ public class FollowUpPluginTest extends TestCase {
     }
 
     private void indexDocument(String id) throws IOException {
-        XContentBuilder sourceBuilder = XContentFactory.jsonBuilder()
+        XContentBuilder sourceBuilder = jsonBuilder()
                 .startObject()
                 .field("key", "Lorem ipsum")
                 .field("value", randomGenerator.nextLong())
@@ -106,7 +106,7 @@ public class FollowUpPluginTest extends TestCase {
     }
 
     private void createDocument() throws IOException {
-        XContentBuilder sourceBuilder = XContentFactory.jsonBuilder()
+        XContentBuilder sourceBuilder = jsonBuilder()
                 .startObject()
                 .field("key", "Lorem ipsum")
                 .field("value", randomGenerator.nextLong())

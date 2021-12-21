@@ -1,19 +1,21 @@
 package de.artcom_venture.elasticsearch.followup;
 
-import static org.elasticsearch.rest.RestRequest.Method.GET;
-import static org.elasticsearch.rest.RestStatus.OK;
-import static org.elasticsearch.rest.RestStatus.NOT_FOUND;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import org.elasticsearch.client.node.NodeClient;
 import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.rest.*;
+import org.elasticsearch.rest.BaseRestHandler;
+import org.elasticsearch.rest.BytesRestResponse;
+import org.elasticsearch.rest.RestController;
+import org.elasticsearch.rest.RestRequest;
+import org.elasticsearch.xcontent.XContentBuilder;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.elasticsearch.rest.RestRequest.Method.GET;
+import static org.elasticsearch.rest.RestStatus.NOT_FOUND;
+import static org.elasticsearch.rest.RestStatus.OK;
 
 /**
  * @license MIT
