@@ -11,7 +11,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <elasticsearch>7.17.0</elasticsearch>
+        <elasticsearch>8.0.0</elasticsearch>
         <compiler>1.8</compiler>
     </properties>
 
@@ -44,7 +44,7 @@
         </dependency>
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
-            <artifactId>transport</artifactId>
+            <artifactId>elasticsearch-rest-client</artifactId>
             <version>${elasticsearch}</version>
             <scope>test</scope>
         </dependency>

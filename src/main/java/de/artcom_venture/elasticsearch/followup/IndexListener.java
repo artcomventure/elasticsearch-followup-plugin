@@ -30,14 +30,14 @@ public class IndexListener implements IndexingOperationListener {
 	@Override
 	public void postDelete(ShardId shardId, Delete document, DeleteResult result) {
 		if (this.isStarted) {
-			changes.add(new Change(Change.DELETE, document.id(), document.type()));
+			changes.add(new Change(Change.DELETE, document.id()));
 		}
 	}
 
 	@Override
 	public void postIndex(ShardId shardId, Index document, IndexResult result) {
 		if (this.isStarted) {
-			changes.add(new Change(Change.INDEX, document.id(), document.type()));
+			changes.add(new Change(Change.INDEX, document.id()));
 		}
 	}
 	

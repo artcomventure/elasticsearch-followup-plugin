@@ -17,4 +17,9 @@ public class Change {
     	this.id = id;
     	this.type = type;
     }
+    Change(String operation, String id) {
+        this.operation = operation;
+        this.id = id;
+        this.type = "_doc";
+    }
 }
