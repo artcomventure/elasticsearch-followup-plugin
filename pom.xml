@@ -11,7 +11,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <elasticsearch>8.0.1</elasticsearch>
+        <elasticsearch>8.1.0</elasticsearch>
         <compiler>1.8</compiler>
     </properties>
 
@@ -33,7 +33,7 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.17.0</version>
+            <version>2.17.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
