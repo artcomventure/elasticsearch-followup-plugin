@@ -4,7 +4,7 @@ import org.elasticsearch.client.internal.node.NodeClient;
 import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.rest.BaseRestHandler;
-import org.elasticsearch.rest.BytesRestResponse;
+import org.elasticsearch.rest.RestResponse;
 import org.elasticsearch.rest.RestController;
 import org.elasticsearch.rest.RestRequest;
 import org.elasticsearch.xcontent.XContentBuilder;
@@ -35,20 +35,20 @@ public class FollowUpAction extends BaseRestHandler {
 		String indexName = restRequest.param("index");
 
 		if (FollowUpPlugin.getListener(indexName) == null) {
-			return channel -> channel.sendResponse(new BytesRestResponse(NOT_FOUND, channel.newBuilder()));
+			return channel -> channel.sendResponse(new RestResponse(NOT_FOUND, channel.newBuilder()));
 		}
 		
 		if (restRequest.param("start", null) != null) {
 			FollowUpPlugin.getListener(indexName).start();
-			return channel -> channel.sendResponse(new BytesRestResponse(OK, channel.newBuilder().startObject().field(STATUS, 200).endObject()));
+			return channel -> channel.sendResponse(new RestResponse(OK, channel.newBuilder().startObject().field(STATUS, 200).endObject()));
 		}
 		if (restRequest.param("stop", null) != null) {
 			FollowUpPlugin.getListener(indexName).stop();
-			return channel -> channel.sendResponse(new BytesRestResponse(OK, channel.newBuilder().startObject().field(STATUS, 200).endObject()));
+			return channel -> channel.sendResponse(new RestResponse(OK, channel.newBuilder().startObject().field(STATUS, 200).endObject()));
 		}
 		if (restRequest.param("clear", null) != null) {
 			FollowUpPlugin.getListener(indexName).clear();
-			return channel -> channel.sendResponse(new BytesRestResponse(OK, channel.newBuilder().startObject().field(STATUS, 200).endObject()));
+			return channel -> channel.sendResponse(new RestResponse(OK, channel.newBuilder().startObject().field(STATUS, 200).endObject()));
 		}
 		return channel -> {
 			XContentBuilder builder = channel.newBuilder();
@@ -66,7 +66,7 @@ public class FollowUpAction extends BaseRestHandler {
 				builder.endArray();
 			}
 			builder.endObject();
-			channel.sendResponse(new BytesRestResponse(OK, builder));
+			channel.sendResponse(new RestResponse(OK, builder));
 		};
 	}
 
